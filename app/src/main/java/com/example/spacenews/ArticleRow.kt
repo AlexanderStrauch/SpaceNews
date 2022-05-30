@@ -25,6 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import coil.compose.rememberAsyncImagePainter
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -88,8 +91,9 @@ fun ArticleRow(article: ArticleViewModel) {
             }
         }
     }
+    val date = LocalDate.parse(article.publishedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
     Text(
-        text = article.publishedAt + ", " + article.newsSite,
+        text = date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString() + ", " + article.newsSite,
         modifier = Modifier.padding(start = 10.dp, top = 2.dp, bottom = 10.dp),
         style = TextStyle(
             color = Color.Black,
