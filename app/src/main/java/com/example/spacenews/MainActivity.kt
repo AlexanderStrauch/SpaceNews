@@ -22,6 +22,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.StringBuilder
 
+const val BASE_URL = "https://api.spaceflightnewsapi.net/v3/"
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

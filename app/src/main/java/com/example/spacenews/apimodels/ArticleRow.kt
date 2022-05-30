@@ -1,7 +1,6 @@
-package com.example.spacenews
+package com.example.spacenews.apimodels
 
 import android.content.Intent
-import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -20,21 +19,18 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import coil.compose.rememberAsyncImagePainter
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ArticleRow(article: ArticleViewModel) {
+fun ArticleRow(article: ArticleItem) {
     val context = LocalContext.current
     val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse(article.url)) }
 

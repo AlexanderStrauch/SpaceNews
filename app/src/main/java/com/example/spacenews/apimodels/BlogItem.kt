@@ -1,8 +1,7 @@
-package com.example.spacenews
+package com.example.spacenews.apimodels
 
-data class ArticleItem(
+data class BlogItem(
     val events: List<Any>,
-    val featured: Boolean,
     val id: Int,
     val imageUrl: String,
     val launches: List<Any>,

@@ -1,6 +1,8 @@
 package com.example.spacenews.screens
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
@@ -10,6 +12,8 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.spacenews.*
+import com.example.spacenews.apimodels.ApiInterface
+import com.example.spacenews.apimodels.ArticleItem
 import com.example.spacenews.ui.theme.SpaceNewsTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,47 +25,41 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ArticleScreen() {
     SpaceNewsTheme {
-        // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Red),
-            //color = MaterialTheme.colors.background
         ) {
-            MainContent()
+            ArticleScreenContent()
         }
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MainContent() {
+fun ArticleScreenContent() {
     Scaffold(topBar = { TopAppBar(title = { Text(text = "Space News") }) })
     {
         runBlocking {
-            val job: Job = launch(context = Dispatchers.IO) { getArticles() }
+            launch(context = Dispatchers.IO) { getArticles() }
         }
-        SimpleList(listitems = articleItems)
+        ArticleList(listitems = articleItems)
     }
 }
 
-const val BASE_URL = "https://api.spaceflightnewsapi.net/v3/"
+var articleItems: SnapshotStateList<ArticleItem> = mutableStateListOf<ArticleItem>()
 
-var articleItems: SnapshotStateList<ArticleViewModel> = mutableStateListOf<ArticleViewModel>()
-
-
-private fun getArticles() {
-
+fun getArticles() {
     val retrofitBuilder = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(BASE_URL)
         .build()
         .create(ApiInterface::class.java)
 
-
-    Log.i("getArticles", "index=" + 1)
     val retrofitData = retrofitBuilder.getArticles()
 
     retrofitData.enqueue(object : Callback<List<ArticleItem>?> {
@@ -76,14 +74,18 @@ private fun getArticles() {
 
             for (myArticle in responseBody) {
                 articleItems.add(
-                    element = ArticleViewModel(
+                    element = ArticleItem(
                         id = myArticle.id,
                         title = myArticle.title,
                         url = myArticle.url,
                         imageUrl = myArticle.imageUrl,
                         newsSite = myArticle.newsSite,
                         summary = myArticle.summary,
-                        publishedAt = myArticle.publishedAt
+                        publishedAt = myArticle.publishedAt,
+                        events = myArticle.events,
+                        launches = myArticle.launches,
+                        featured = myArticle.featured,
+                        updatedAt = myArticle.updatedAt
                     )
                 )
             }
@@ -93,6 +95,4 @@ private fun getArticles() {
             Log.i("onFailure", "index=" + 1)
         }
     })
-
-
 }
