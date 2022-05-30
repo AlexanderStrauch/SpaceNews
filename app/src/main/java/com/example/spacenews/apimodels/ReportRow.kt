@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -118,16 +119,31 @@ fun ReportRow(report: ReportItem) {
                 )
             }
         }
-        Text(
-            text = report.summary,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .padding(start = 5.dp,top = 5.dp, end = 5.dp, bottom = 15.dp)
-                .align(alignment = Alignment.Start),
-            style = TextStyle(
-                color = Color.Black,
-                fontSize = 14.sp
+        if (isSystemInDarkTheme()){
+            Text(
+                text = report.summary,
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .padding(start = 5.dp,top = 5.dp, end = 5.dp, bottom = 15.dp)
+                    .align(alignment = Alignment.Start),
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 14.sp
+                )
             )
-        )
+        }
+        else {
+            Text(
+                text = report.summary,
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .padding(start = 5.dp,top = 5.dp, end = 5.dp, bottom = 15.dp)
+                    .align(alignment = Alignment.Start),
+                style = TextStyle(
+                    color = Color.Black,
+                    fontSize = 14.sp
+                )
+            )
+        }
     }
 }
