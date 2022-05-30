@@ -11,22 +11,17 @@ sealed class BottomBarScreen(
 ) {
     object Article: BottomBarScreen(
         route = "article",
-        title = "Article",
+        title = "Articles",
         icon = Icons.Default.Home
     )
     object Blog: BottomBarScreen(
         route = "blog",
-        title = "Blog",
+        title = "Blogs",
         icon = Icons.Default.Menu
-    )
-    object Info: BottomBarScreen(
-        route = "info",
-        title = "Info",
-        icon = Icons.Default.List
     )
     object Report: BottomBarScreen(
         route = "report",
-        title = "Report",
+        title = "ISS Reports",
         icon = Icons.Default.Place
     )
 }

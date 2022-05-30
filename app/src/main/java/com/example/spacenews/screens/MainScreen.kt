@@ -1,5 +1,7 @@
 package com.example.spacenews.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -12,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.spacenews.BottomBarScreen
 import com.example.spacenews.BottomNavGraph
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
@@ -27,7 +30,6 @@ fun BottomBar(navController: NavHostController) {
     val screens = listOf(
         BottomBarScreen.Article,
         BottomBarScreen.Blog,
-        BottomBarScreen.Info,
         BottomBarScreen.Report
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()

@@ -30,9 +30,9 @@ import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun BlogRow(blog: BlogItem) {
+fun ReportRow(report: ReportItem) {
     val context = LocalContext.current
-    val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse(blog.url)) }
+    val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse(report.url)) }
 
     Column(
         modifier = Modifier
@@ -48,10 +48,10 @@ fun BlogRow(blog: BlogItem) {
             elevation = 10.dp,
         ) {
             Box(
-                modifier = Modifier.height(350.dp)
+                modifier = Modifier.height(200.dp)
             ) {
                 Image(
-                    painter = rememberAsyncImagePainter(blog.imageUrl),
+                    painter = rememberAsyncImagePainter(report.imageUrl),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -78,7 +78,7 @@ fun BlogRow(blog: BlogItem) {
                     contentAlignment = Alignment.BottomStart
                 ) {
                     Text(
-                        text = blog.title,
+                        text = report.title,
                         modifier = Modifier.padding(top = 0.dp, bottom = 0.dp),
                         style = TextStyle(
                             color = Color.White,
@@ -87,11 +87,11 @@ fun BlogRow(blog: BlogItem) {
                     )
                 }
             }
-            val date = LocalDate.parse(blog.publishedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
+            val date = LocalDate.parse(report.publishedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .height(350.dp)
+                    .height(200.dp)
                     .align(alignment = Alignment.CenterHorizontally),
             ){
                 Text(
@@ -106,7 +106,7 @@ fun BlogRow(blog: BlogItem) {
                     )
                 )
                 Text(
-                    text = blog.newsSite,
+                    text = report.newsSite,
                     textAlign = TextAlign.End,
                     modifier = Modifier
                         .padding(end = 10.dp, bottom = 5.dp)
@@ -119,7 +119,7 @@ fun BlogRow(blog: BlogItem) {
             }
         }
         Text(
-            text = blog.summary,
+            text = report.summary,
             textAlign = TextAlign.Start,
             modifier = Modifier
                 .padding(start = 5.dp,top = 5.dp, end = 5.dp, bottom = 15.dp)

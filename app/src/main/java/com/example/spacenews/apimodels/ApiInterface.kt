@@ -10,4 +10,7 @@ interface ApiInterface{
 
     @GET(value = "blogs?_limit=50")
     fun getBlogs(): Call<List<BlogItem>>
+
+    @GET(value = "reports?_limit=50")
+    fun getReports(): Call<List<ReportItem>>
 }

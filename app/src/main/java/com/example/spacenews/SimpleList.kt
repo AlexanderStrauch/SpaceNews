@@ -6,10 +6,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import com.example.spacenews.apimodels.ArticleItem
-import com.example.spacenews.apimodels.ArticleRow
-import com.example.spacenews.apimodels.BlogItem
-import com.example.spacenews.apimodels.BlogRow
+import com.example.spacenews.apimodels.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -27,6 +24,16 @@ fun BlogList(listitems: List<BlogItem>){
     LazyColumn{
         items(listitems){
                 item -> BlogRow(blog = item)
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun ReportList(listitems: List<ReportItem>){
+    LazyColumn{
+        items(listitems){
+                item -> ReportRow(report = item)
         }
     }
 }
