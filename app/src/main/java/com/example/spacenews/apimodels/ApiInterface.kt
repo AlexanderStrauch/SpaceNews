@@ -2,15 +2,25 @@ package com.example.spacenews.apimodels
 
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Query
 
-interface ApiInterface{
+interface ApiInterface {
 
-    @GET(value = "articles?_limit=50")
-    fun getArticles(): Call<List<ArticleItem>>
+    @GET(value = "articles")
+    fun getArticles(
+        @Query("_limit") limit: String,
+        @Query("_start") index: String
+    ): Call<List<ArticleItem>>
 
-    @GET(value = "blogs?_limit=50")
-    fun getBlogs(): Call<List<BlogItem>>
+    @GET(value = "blogs")
+    fun getBlogs(
+        @Query("_limit") limit: String,
+        @Query("_start") index: String
+    ): Call<List<BlogItem>>
 
-    @GET(value = "reports?_limit=50")
-    fun getReports(): Call<List<ReportItem>>
+    @GET(value = "reports")
+    fun getReports(
+        @Query("_limit") limit: String,
+        @Query("_start") index: String
+    ): Call<List<ReportItem>>
 }

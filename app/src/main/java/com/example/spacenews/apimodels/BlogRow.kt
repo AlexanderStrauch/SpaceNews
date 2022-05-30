@@ -45,7 +45,7 @@ fun BlogRow(blog: BlogItem) {
                     context.startActivity(intent)
                 },
             shape = RoundedCornerShape(5.dp),
-            elevation = 10.dp,
+            elevation = 5.dp,
         ) {
             Box(
                 modifier = Modifier.height(350.dp)

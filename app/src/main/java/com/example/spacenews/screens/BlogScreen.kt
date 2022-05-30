@@ -41,7 +41,8 @@ fun BlogScreen() {
         }
     }
 }
-
+var blogIndex: Int = 0
+const val blogLimit: Int = 20
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -51,7 +52,12 @@ fun BlogScreenContent() {
         runBlocking {
             launch(context = Dispatchers.IO) { getBlogs() }
         }
-        BlogList(listitems = blogItems)
+        BlogList(
+            listItems = blogItems,
+            onLoadMore = {
+                blogIndex += blogLimit
+            getArticles()
+        })
     }
 }
 
@@ -64,7 +70,7 @@ fun getBlogs() {
         .build()
         .create(ApiInterface::class.java)
 
-    val retrofitData = retrofitBuilder.getBlogs()
+    val retrofitData = retrofitBuilder.getBlogs(limit = blogLimit.toString(), index = blogIndex.toString())
 
     retrofitData.enqueue(object : Callback<List<BlogItem>?> {
 

@@ -41,6 +41,9 @@ fun ReportScreen() {
     }
 }
 
+var reportIndex: Int = 0
+const val reportLimit: Int = 20
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -50,7 +53,11 @@ fun ReportScreenContent() {
         runBlocking {
             launch(context = Dispatchers.IO) { getReports() }
         }
-        ReportList(listitems = reportItems)
+        ReportList(listItems = reportItems,
+            onLoadMore = {
+                reportIndex += reportLimit
+                getArticles()
+            })
     }
 }
 
@@ -63,7 +70,7 @@ fun getReports() {
         .build()
         .create(ApiInterface::class.java)
 
-    val retrofitData = retrofitBuilder.getReports()
+    val retrofitData = retrofitBuilder.getReports(limit = reportLimit.toString(), index = reportIndex.toString())
 
     retrofitData.enqueue(object : Callback<List<ReportItem>?> {
 

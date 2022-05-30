@@ -38,6 +38,8 @@ fun ArticleScreen() {
         }
     }
 }
+var articleIndex: Int = 0
+const val articleLimit: Int = 20
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -47,7 +49,12 @@ fun ArticleScreenContent() {
         runBlocking {
             launch(context = Dispatchers.IO) { getArticles() }
         }
-        ArticleList(listitems = articleItems)
+        ArticleList(
+            listItems = articleItems,
+            onLoadMore = {
+                articleIndex += articleLimit
+                getArticles()
+            })
     }
 }
 
@@ -60,7 +67,7 @@ fun getArticles() {
         .build()
         .create(ApiInterface::class.java)
 
-    val retrofitData = retrofitBuilder.getArticles()
+    val retrofitData = retrofitBuilder.getArticles(limit = articleLimit.toString(), index = articleIndex.toString())
 
     retrofitData.enqueue(object : Callback<List<ArticleItem>?> {
 
@@ -68,8 +75,6 @@ fun getArticles() {
             call: Call<List<ArticleItem>?>,
             response: Response<List<ArticleItem>?>
         ) {
-
-            Log.i("onResponse", "index=" + 1)
             val responseBody = response.body()!!
 
             for (myArticle in responseBody) {
