@@ -1,6 +1,7 @@
 package com.example.spacenews
 
 import android.content.Intent
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -21,6 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
@@ -38,7 +40,7 @@ fun ArticleRow(article: ArticleViewModel) {
 
     Column(
         modifier = Modifier
-            .padding(start = 5.dp, end = 5.dp, top = 5.dp, bottom = 0.dp)
+            .padding(start = 5.dp, end = 5.dp, top = 5.dp, bottom = 5.dp)
     ) {
         Card(
             modifier = Modifier
@@ -47,7 +49,7 @@ fun ArticleRow(article: ArticleViewModel) {
                     context.startActivity(intent)
                 },
             shape = RoundedCornerShape(5.dp),
-            elevation = 5.dp
+            elevation = 10.dp,
         ) {
             Box(
                 modifier = Modifier.height(200.dp)
@@ -76,12 +78,12 @@ fun ArticleRow(article: ArticleViewModel) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(12.dp),
+                        .padding(start = 10.dp, bottom = 25.dp, end = 10.dp),
                     contentAlignment = Alignment.BottomStart
                 ) {
                     Text(
                         text = article.title,
-                        modifier = Modifier.padding(top = 4.dp),
+                        modifier = Modifier.padding(top = 0.dp, bottom = 0.dp),
                         style = TextStyle(
                             color = Color.White,
                             fontSize = 14.sp
@@ -89,15 +91,36 @@ fun ArticleRow(article: ArticleViewModel) {
                     )
                 }
             }
+            val date = LocalDate.parse(article.publishedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .height(200.dp)
+                    .align(alignment = Alignment.CenterHorizontally),
+            ){
+                Text(
+                    text = date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString(),
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .padding(start = 10.dp, bottom = 5.dp)
+                        .align(alignment = Alignment.BottomStart),
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 10.sp
+                    )
+                )
+                Text(
+                    text = article.newsSite,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier
+                        .padding(end = 10.dp, bottom = 5.dp)
+                        .align(alignment = Alignment.BottomEnd),
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 10.sp
+                    )
+                )
+            }
         }
     }
-    val date = LocalDate.parse(article.publishedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
-    Text(
-        text = date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString() + ", " + article.newsSite,
-        modifier = Modifier.padding(start = 10.dp, top = 2.dp, bottom = 10.dp),
-        style = TextStyle(
-            color = Color.Black,
-            fontSize = 12.sp
-        )
-    )
 }
